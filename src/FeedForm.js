@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CustomPortal from "./CustomPortal";
 import "./style.css";
+import app from "firebase/app";
+import Firebase from "./firebase";
 
 const optionsList = [
   {
@@ -21,87 +23,22 @@ const optionsList = [
   },
 ];
 
-// const useStyles = makeStyles((theme) => ({
-//   dialogPaper: {
-//     width: "46rem",
-//     height: "46rem",
-//     backgroundColor: "#121212",
-//     borderRadius: "1.5rem",
-//     overflow: "hidden",
-//     // transition: "all .2s ease-in-out",
-//   },
-//   wrapper: {
-//     display: "flex",
-//     flexDirection: "column",
-//     alignItems: "center",
-//   },
-//   options: {
-//     width: "calc(100% - 3.5rem)",
-//     height: "8rem",
-//     backgroundColor: "#393e46",
-//     borderRadius: ".7ren",
-//     cursor: "pointer",
-//     transition: "all .2s ease-in-out",
-//     display: "flex",
-//     alignItems: "center",
+const getStoriesAPI = async () => {
+  let unSelect = app
+    .firestore()
+    .collection("Projects")
+    .where("uid", "==", `6988`);
 
-//     "& active": {
-//       transform: "scale(.96)",
-//       boxShadow: "inset 0 0 2rem .4rem #d65a311a",
-//     },
-//   },
-//   slideLeft: {
-//     transition: "0.4s all ease-in-out",
-//   },
-//   normalState: {
-//     transition: "0.2s all ease-in-out",
-//   },
-// }));
+  //this will get the tasks with this use Id  `
+  unSelect = unSelect.onSnapshot((snapshot) => {
+    const newTasks = snapshot.docs.map((task) => ({
+      id: task.id,
+      ...task.data(),
+    }));
 
-// const useInputFieldClasses = makeStyles((theme) => ({
-//   root: {
-//     height: "7rem",
-//     width: "100%",
-//     minHeight: "inherit",
-//     transition:
-//       "background-color 80ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 80ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-//     borderRadius: "1.2rem",
-//     "& label": {
-//       transform: "none",
-//     },
-//     position: "relative",
-//     backgroundColor: "rgb(255 255 255 / 23%)",
-//     alignItems: "center",
-//     display: "flex",
-//   },
-
-//   input: {
-//     fontSize: "2.5rem !important",
-//     lineHeight: "3rem",
-//     fontWeight: "400 !important",
-//     letterSpacing: "0.03rem",
-//     color: "#eaeaea",
-//     padding: "0 2rem",
-
-//     "&::placeholder": {
-//       color: "#9c9c9c",
-//       fontSize: "2.5rem !important",
-//       lineHeight: "3rem",
-//       fontWeight: "400 !important",
-//       opacity: ".4 !important",
-//       letterSpacing: "0.03rem",
-//     },
-
-//     "&::-webkit-input-placeholder": {
-//       color: "#9c9c9c",
-//       fontSize: "2.5rem !important",
-//       lineHeight: "3rem",
-//       fontWeight: "400 !important",
-//       opacity: ".4 !important",
-//       letterSpacing: "0.03rem",
-//     },
-//   },
-// }));
+    console.log(newTasks);
+  });
+};
 
 const fn = (e, t, p) => {
   e.feedform = e.feedform || [];
@@ -130,6 +67,13 @@ const FeedForm = (props) => {
   useEffect(() => {
     fn(window, document, props);
   }, []);
+
+  const addStory = (type) => {
+    Firebase.addFeedbacks(type, {
+      uid: props.feedformId,
+      text: "add a button please",
+    });
+  };
 
   const handleclickPopup = () => {
     if (document.getElementById("modal6")) {
@@ -204,6 +148,7 @@ const FeedForm = (props) => {
                       <div
                         key={i}
                         onClick={() => {
+                          addStory(item.name);
                           setSlide(true);
                         }}
                         className="optionsList"
@@ -231,8 +176,9 @@ const FeedForm = (props) => {
                       placeholder="password"
                       className="feedformInput"
                     />
-
                     <button onClick={() => setSlide(false)}>click</button>
+                    <button onClick={() => addStory()}>click</button>
+                    <button onClick={() => getStoriesAPI()}>click</button>
                   </div>
                 </div>
               </div>

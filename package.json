@@ -1,6 +1,6 @@
 {
   "name": "feedform",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "",
   "main": "build/FeedForm.js",
   "author": {
@@ -15,7 +15,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.14.0",
     "style-loader": "^2.0.0",
-    "webpack": "^4.29.6"
+    "webpack": "^4.29.6",
+    "firebase": "^7.24.0"
   },
   "scripts": {
     "start": "webpack --watch",
