@@ -33,7 +33,7 @@
 
 .feedformContainer {
   width: 55rem;
-  height: 40rem;
+  padding: 5px 0 20px 0;
   background-color: #fff;
   border-radius: 25px;
   overflow: hidden;
@@ -41,7 +41,7 @@
 
 .optionsList {
   width: calc(100% - 7rem);
-  height: 8rem;
+  padding: 20px 0 !important;
   background-color: #ececec57;
   border-radius: 0.7rem;
   cursor: pointer;

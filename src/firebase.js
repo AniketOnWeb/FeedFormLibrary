@@ -35,10 +35,10 @@ class Firebase {
       .collection(type)
       .add(response)
       .then((res) => {
-        console.log("Document written with ID: ", res.id);
+        // console.log("Document written with ID: ", res.id);
       })
       .catch((error) => {
-        console.error("Error adding document: ", error);
+        // console.error("Error adding document: ", error);
       });
   }
 }
